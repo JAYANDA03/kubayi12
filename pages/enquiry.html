@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enquiry | Green Earth Conservation</title>
+
+    <link rel="stylesheet" href="../css/Style .css">
+    <script defer src="../javascript/script.js"></script>
+
+    <style>
+        .error { color: red; font-size: 14px; }
+        .success { color: green; font-size: 14px; }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <img src="../assets/logo.jfif" 
+    width="200" 
+    height="150" 
+    alt="Green Earth Conservation logo">
+    <h1>Enquiry Form</h1>
+
+    <nav>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Events.html">Events</a></li>
+            <li><a href="Resources.html">Resources</a></li>
+            <li><a href="Contact.html">Contact</a></li>
+            <li><a href="Enquiry.html" class="active">Enquiry</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div id="enquiryForm" method="POST" onsubmit="validateEnquiryForm(Event)">
+
+        <label>Full Name</label>
+        <input type="text" id="eq_name" required>
+
+        <label>Email Address</label>
+        <input type="email" id="eq_email" required>
+
+        <label>Phone Number</label>
+        <input type="text" id="eq_phone" placeholder="+1 234 567 8901" required>
+
+        <label>Enquiry Type</label>
+        <select id="eq_type">
+            <option value="">Select</option>
+            <option value="volunteer">Volunteer</option>
+            <option value="donation">Donation</option>
+            <option value="collaboration">Collaboration</option>
+            <option value="other">Other</option>
+        </select>
+
+        <label>Your Message</label>
+        <textarea id="eq_message" required></textarea>
+
+        <button type="submit">Submit Enquiry</button>
+        <p id="eq_feedback"></p>
+    </div>
+</main>
+
+<script>
+// ENQUIRY PAGE VALIDATION
+document.getElementById('enquiryForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const name = document.getElementById('eq_name').value.trim();
+    const email = document.getElementById('eq_email').value.trim();
+    const phone = document.getElementById('eq_phone').value.trim();
+    const type = document.getElementById('eq_type').value;
+    const msg = document.getElementById('eq_message').value.trim();
+    const feedback = document.getElementById('eq_feedback');
+
+    const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneCheck = /^[0-9+\-\s]{7,15}$/;
+
+    if(name.length < 3){
+        feedback.textContent = "Name must be at least 3 characters.";
+        feedback.className = "error";
+        return;
+    }
+
+    if(!emailCheck.test(email)){
+        feedback.textContent = "Enter a valid email address.";
+        feedback.className = "error";
+        return;
+    }
+
+    if(!phoneCheck.test(phone)){
+        feedback.textContent = "Enter a valid phone number.";
+        feedback.className = "error";
+        return;
+    }
+
+    if(type === ""){
+        feedback.textContent = "Please select an enquiry type.";
+        feedback.className = "error";
+        return;
+    }
+
+    if(msg.length < 10){
+        feedback.textContent = "Message must be at least 10 characters long.";
+        feedback.className = "error";
+        return;
+    }
+
+    feedback.textContent = "Your enquiry has been submitted successfully!";
+    feedback.className = "success";
+    document.getElementById('enquiryForm').reset();
+});
+</script>
+
+<footer>
+    <p>&copy; 2025 Green Earth Conservation</p>
+</footer>
+
+</body>
+</html>
